@@ -1,9 +1,10 @@
 from random import shuffle
+import numpy as np
+
 def bubbleSort(arr, swap):
     sorted = False
     while(not sorted):
         sorted = True
-        
         for i in range(len(arr)-1):
             if(arr[i]>arr[i+1]):
                 swap(i, i+1)
@@ -44,12 +45,14 @@ def mergeSort(arr, swap):
             m2 = min(i+n-1, len(arr)-1)
             res = merge(arr, n1, n2, m1, m2)
             for i in range(n1, m2):
-                swap(i, arr.index(res[i-n1], i, m2+1))
+                if(arr[i] != res[i-n1]):
+                    
+                    swap(i, np.argwhere(arr[i:m2+1] == res[i-n1])[0][0] + i)
 
         
     return
 
-def test(sort, arr = []):
+def test(sort, arr):
     global _swaps
     def swap(n1, n2):
         global _swaps
@@ -57,18 +60,14 @@ def test(sort, arr = []):
         _swaps += 1
     _swaps = 0
     
-    if(not arr):
-        arr = list(range(100))
-        shuffle(arr)
     orig = sorted(arr.copy())
     sort(arr, swap)
-
-    return (arr == orig, _swaps)
+    return (np.all(arr == orig), _swaps)
 
     
 
 if __name__ == "__main__":
-    arr = list(range(500))
+    arr = np.array([*range(1, 501)])
     shuffle(arr)
 
     print("{0:>15}:   Working - {1}, Required {2:>8} swaps".format("BubbleSort", *test(bubbleSort, arr.copy())))
