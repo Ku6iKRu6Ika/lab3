@@ -1,0 +1,5 @@
+{
+    "fps" : 30,
+    "maxFramesSkipped" : 1000,
+    "introAndOutroLength" : 50
+}
