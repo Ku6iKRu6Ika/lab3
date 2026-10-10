@@ -12,3 +12,5 @@ FILE* createFile(int width, int height);
 int writeSwap(FILE* file, int, int, int, int);
 
 int close(FILE* file);
+
+int** createArr2d(int, int);

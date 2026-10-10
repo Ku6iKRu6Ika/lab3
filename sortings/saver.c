@@ -2,18 +2,10 @@
 #include <stdlib.h>
 #include <time.h>
 #include "saver.h"
-
+/*
 int main(int argc, char** argv)
 {
-	int** arr = (int**)malloc(sizeof(int*)*10);
-	for(int i = 0; i<10; i++)
-	{
-		arr[i] = (int*)malloc(sizeof(int)*10);
-		for(int j = 0; j<10; j++)
-		{
-			arr[i][j] = 10*i+j;
-		}
-	}
+	int** arr = createArr2d(10, 10);
 
 	shuffle2d(arr, 10, 10, 0);
 
@@ -28,6 +20,21 @@ int main(int argc, char** argv)
 	close(file);
 
 	return 0;
+}
+*/
+int** createArr2d(int width, int height)
+{
+	int** arr = (int**)malloc(sizeof(int*)*height);
+	for(int i = 0; i<height; i++)
+	{
+		arr[i] = (int*)malloc(sizeof(int)*width);
+		for(int j = 0; j<width; j++)
+		{
+			arr[i][j] = 10*i+j;
+		}
+	}
+
+	return arr;
 }
 
 void shuffle2d(int **arr, int width, int height, int seed)
