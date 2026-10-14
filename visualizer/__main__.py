@@ -7,12 +7,12 @@ from visualizer.video import VideoBuilder
 
 
 def main():
-    if len(sys.argv) < 4:
-        exit('You are not entering enough arguments.')
+    if len(sys.argv) != 3:
+        exit('Wrong arg count')
 
-    PATH_TXT = sys.argv[1]
-    PATH_IMAGE = sys.argv[2]
-    PATH_VIDEO = sys.argv[3]
+    PATH_TXT = "sortings/sequence.txt" #no reasone to change that
+    PATH_IMAGE = sys.argv[1]
+    PATH_VIDEO = sys.argv[2]
 
     image = PixelSwapper(PATH_IMAGE)
     video = VideoBuilder(
@@ -25,12 +25,18 @@ def main():
 
     video.pause(image.image, config.introAndOutroLength)
 
-    with open(PATH_TXT, 'r', encoding='utf-8') as fp:
-        numbers = np.array(list(map(int, fp.readline().split(' '))))
+    with open(PATH_TXT, 'rb') as fp:
+        intSize = int.from_bytes(fp.read(1))
+        wth = int.from_bytes(fp.read(intSize))
+        hgt = int.from_bytes(fp.read(intSize))
+        rawNums = fp.read(wth*hgt*intSize)
+        numbers = [int.from_bytes(rawNums[i:i+intSize]) for i in range(0, len(rawNums), intSize)]
         image.swap_by_number(numbers)
 
-        for line in fp.readlines():
-            x1, y1, x2, y2 = map(int, line.split(' '))
+        while True:
+            rawNums = fp.read(4*intSize)
+            if(len(rawNums)<4): break
+            x1, y1, x2, y2 = [int.from_bytes(rawNums[i:i+intSize]) for i in range(0, len(rawNums), intSize)]
             p1 = Pixel(x1, y1)
             p2 = Pixel(x2, y2)
 
