@@ -14,3 +14,7 @@ int writeSwap(FILE* file, int, int, int, int);
 int close(FILE* file);
 
 int** createArr2d(int, int);
+
+int isSorted(int** arr, int, int);
+
+void print2d(int** arr, int, int);
