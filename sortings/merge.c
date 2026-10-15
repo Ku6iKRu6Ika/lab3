@@ -40,7 +40,7 @@ void place(int** arr, int wth, int hgt, int* res, int diffX, int diffY, FILE* fi
 		}
 		
 		swap(arr[i]+j, arr[a]+b);
-		printf("%d %d %d %d\n", diffX + j, diffY + i, diffX + b, diffY + a);
+		// printf("%d %d %d %d\n", diffX + j, diffY + i, diffX + b, diffY + a);
 		writeSwap(file, diffX + j, diffY + i, diffX + b, diffY + a);
 	}
 
@@ -90,7 +90,7 @@ int* merge(int** arr1, int wth1, int hgt1, int** arr2, int wth2, int hgt2)
 
 int merge2d(int** arr, int wth, int hgt, int diffX, int diffY, FILE* file)
 {
-	printf("%d %d\n\n", diffX, diffY);
+	// printf("%d %d\n\n", diffX, diffY);
 	if(wth == 0)
 	{
 		wth = 1;
@@ -123,7 +123,7 @@ int merge2d(int** arr, int wth, int hgt, int diffX, int diffY, FILE* file)
 	free(res);
 
 	res = merge(arr + hgt/2, wth/2, hgt-hgt/2, _arr + hgt/2, wth-wth/2, hgt-hgt/2);
-	place(arr+hgt/2, wth, hgt-hgt/2, res, diffX, diffY, file);
+	place(arr+hgt/2, wth, hgt-hgt/2, res, diffX, diffY+hgt/2, file);
 	free(res);
 
 	res = merge(arr, wth, hgt/2, arr+hgt/2, wth, hgt-hgt/2);
@@ -143,7 +143,7 @@ int main(int argc, char** argv)
 	FILE* file = createFile(wth, hgt);
 	shuffle2d(arr, wth, hgt, 0);
 	writeArray2d(file, arr, wth, hgt);
-	print2d(arr, wth, hgt);
+	// print2d(arr, wth, hgt);
 	merge2d(arr, wth, hgt, 0, 0, file);
 
 	if(!isSorted(arr, wth, hgt))
