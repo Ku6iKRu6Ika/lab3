@@ -8,7 +8,7 @@ class Pixel:
         self.y = y
 
     def coords(self):
-        return (self.x, self.y)
+        return (self.y, self.x)
 
 
 class PixelSwapper:
